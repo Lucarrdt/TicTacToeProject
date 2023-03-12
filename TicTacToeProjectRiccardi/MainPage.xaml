@@ -10,8 +10,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -25,6 +29,12 @@
             <Button Grid.Row="2" Grid.Column="0" Text="7" />
             <Button Grid.Row="2" Grid.Column="1" Text="8" />
             <Button Grid.Row="2" Grid.Column="2" Text="9" />
+            <Button Grid.Row="3" Grid.Column="0" Text="10" />
+            <Button Grid.Row="3" Grid.Column="1" Text="11" />
+            <Button Grid.Row="3" Grid.Column="2" Text="12" />
+            <Button Grid.Row="4" Grid.Column="0" Text="13" />
+            <Button Grid.Row="4" Grid.Column="1" Text="14" />
+            <Button Grid.Row="4" Grid.Column="2" Text="15" />
         </Grid>
     </ScrollView>
 
