@@ -6,7 +6,6 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
-        InitializeComponent();
         _game = new Game();
     }
 
@@ -21,6 +20,11 @@ public partial class MainPage : ContentPage
         Button clickedButton = sender as Button;
         int row = Grid.GetRow(clickedButton);
         int col = Grid.GetColumn(clickedButton);
-        GameInstance.MakeMove(row, col, GameInstance.CurrentPlayer);
+        GameInstance.MakeMove(row, col);
+    }
+
+    private void OnNewGameButtonClicked(object sender, EventArgs e)
+    {
+        GameInstance.Reset();
     }
 }

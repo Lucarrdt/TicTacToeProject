@@ -1,7 +1,7 @@
 ﻿namespace TicTacToeProjectRiccardi;
 public class Game
 {
-    private readonly int[,] _board;
+    private int[,] _board;
     private readonly int _size;
     private readonly int _winningCount;
     private int _currentPlayer = 1;
@@ -26,7 +26,7 @@ public class Game
     
     public int CurrentPlayer => _currentPlayer;
 
-    public void MakeMove(int row, int col, int _currentPlayer)
+    public void MakeMove(int row, int col)
     {
         if (IsGameOver)
         {
@@ -180,5 +180,13 @@ public class Game
         }
 
         return true;
+    }
+
+    public void Reset()
+    {
+        _board = new int[_size, _size];
+        IsGameOver = false;
+        Winner = 0;
+        _currentPlayer = 1;
     }
 }
