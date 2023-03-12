@@ -182,7 +182,7 @@ public class Game
         return true;
     }
 
-    public void Reset()
+    public void GameReset()
     {
         _board = new int[_size, _size];
         IsGameOver = false;

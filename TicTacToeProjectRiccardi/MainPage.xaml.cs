@@ -1,4 +1,4 @@
-﻿using TicTacToeProjectRiccardi;
+﻿namespace TicTacToeProjectRiccardi;
 
 public partial class MainPage : ContentPage
 {
@@ -7,7 +7,9 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         _game = new Game();
+        InitializeComponent();
     }
+    
 
     private Game GameInstance
     {
@@ -25,6 +27,6 @@ public partial class MainPage : ContentPage
 
     private void OnNewGameButtonClicked(object sender, EventArgs e)
     {
-        GameInstance.Reset();
+        GameInstance.GameReset();
     }
 }
