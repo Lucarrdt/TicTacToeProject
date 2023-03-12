@@ -17,7 +17,7 @@ public partial class MainPage : ContentPage
         set => _game = value;
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
+    private void Button_Clicked(object sender, EventArgs e) // This is the event handler for the 9 buttons that make up the game board and have the same name as the button in the XAML file (Button_Clicked)
     {
         Button clickedButton = sender as Button;
         int row = Grid.GetRow(clickedButton);
@@ -25,7 +25,7 @@ public partial class MainPage : ContentPage
         GameInstance.MakeMove(row, col);
     }
 
-    private void OnNewGameButtonClicked(object sender, EventArgs e)
+    private void OnNewGameButtonClicked(object sender, EventArgs e) // This is the event handler for the New Game button
     {
         GameInstance.GameReset();
     }

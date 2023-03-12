@@ -33,12 +33,12 @@ public class Game
             throw new InvalidOperationException("The game is already over.");
         }
 
-        if (row < 0 || row >= _size || col < 0 || col >= _size)
+        if (row < 0 || row >= _size || col < 0 || col >= _size) // row and col are out of bounds
         {
             throw new ArgumentException("Invalid move: row or column out of bounds.");
         }
 
-        if (_board[row, col] != 0)
+        if (_board[row, col] != 0) // 0 means the cell is empty
         {
             throw new ArgumentException("Invalid move: cell is already occupied.");
         }
@@ -166,7 +166,7 @@ public class Game
 
         return false;
     }
-    private bool CheckForTie()
+    private bool CheckForTie() // if the board is full and there is no winner, it's a tie
     {
         for (int row = 0; row < _size; row++)
         {
@@ -182,7 +182,7 @@ public class Game
         return true;
     }
 
-    public void GameReset()
+    public void GameReset() // reset the board and the game
     {
         _board = new int[_size, _size];
         IsGameOver = false;
