@@ -4,6 +4,7 @@ public class Game
     private readonly int[,] _board;
     private readonly int _size;
     private readonly int _winningCount;
+    private int _currentPlayer = 1;
 
     public Game(int size = 3, int winningCount = 3)
     {
@@ -22,8 +23,10 @@ public class Game
     public bool IsGameOver { get; private set; }
 
     public int Winner { get; private set; }
+    
+    public int CurrentPlayer => _currentPlayer;
 
-    public void MakeMove(int row, int col, int player)
+    public void MakeMove(int row, int col, int _currentPlayer)
     {
         if (IsGameOver)
         {
@@ -40,12 +43,12 @@ public class Game
             throw new ArgumentException("Invalid move: cell is already occupied.");
         }
 
-        _board[row, col] = player;
+        _board[row, col] = _currentPlayer;
 
         if (CheckForWinner())
         {
             IsGameOver = true;
-            Winner = player;
+            Winner = _currentPlayer;
         }
         if (CheckForTie())
         {
