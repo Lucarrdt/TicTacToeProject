@@ -1,71 +1,178 @@
 ﻿namespace TicTacToeProjectRiccardi;
-
 public class Game
 {
-    private readonly int[,] _board = new int[5, 5];
+    private readonly int[,] _board;
+    private readonly int _size;
+    private readonly int _winningCount;
+
+    public Game(int size = 3, int winningCount = 3)
+    {
+        if (size < 2 || winningCount < 2 || winningCount > size)
+        {
+            throw new ArgumentException("Invalid board size or winning count.");
+        }
+
+        _size = size;
+        _winningCount = winningCount;
+        _board = new int[_size, _size];
+    }
 
     public int[,] Board => _board;
-    
+
     public bool IsGameOver { get; private set; }
-    
+
     public int Winner { get; private set; }
-    
-    public void MakeMove (int row, int col, int player)
+
+    public void MakeMove(int row, int col, int player)
     {
         if (IsGameOver)
-            return;
-        
-        if (row is < 0 or > 2 || col is < 0 or > 2)
-            return;
-        
+        {
+            throw new InvalidOperationException("The game is already over.");
+        }
+
+        if (row < 0 || row >= _size || col < 0 || col >= _size)
+        {
+            throw new ArgumentException("Invalid move: row or column out of bounds.");
+        }
+
         if (_board[row, col] != 0)
-            return;
-        
+        {
+            throw new ArgumentException("Invalid move: cell is already occupied.");
+        }
+
         _board[row, col] = player;
-        
+
         if (CheckForWinner())
         {
             IsGameOver = true;
             Winner = player;
         }
-        else if (IsTie())
+        if (CheckForTie())
         {
             IsGameOver = true;
+            Winner = 0;
         }
     }
     private bool CheckForWinner()
     {
-        // Checking rows
-        for (int i = 0; i < 4; i++)
+        // Check rows
+        for (int row = 0; row < _size; row++)
         {
-            if (_board[i, 0] == _board[i, 1] && _board[i, 1] == _board[i, 2] && _board[i, 2] == _board[i, 3] && _board[i, 0] != 0)
-                return true;
+            int count = 0;
+            int lastPlayer = 0;
+            for (int col = 0; col < _size; col++)
+            {
+                int player = _board[row, col];
+                if (player == 0 || player != lastPlayer)
+                {
+                    count = 1;
+                    lastPlayer = player;
+                }
+                else
+                {
+                    count++;
+                }
+
+                if (count == _winningCount)
+                {
+                    return true;
+                }
+            }
         }
 
-        // Checking columns
-        for (int j = 0; j < 3; j++)
+        // Check columns
+        for (int col = 0; col < _size; col++)
         {
-            if (_board[0, j] == _board[1, j] && _board[1, j] == _board[2, j] && _board[2, j] == _board[3, j] && _board[0, j] != 0)
-                return true;
+            int count = 0;
+            int lastPlayer = 0;
+            for (int row = 0; row < _size; row++)
+            {
+                int player = _board[row, col];
+                if (player == 0 || player != lastPlayer)
+                {
+                    count = 1;
+                    lastPlayer = player;
+                }
+                else
+                {
+                    count++;
+                }
+
+                if (count == _winningCount)
+                {
+                    return true;
+                }
+            }
         }
 
-        // Checking diagonals
-        if (_board[0, 0] == _board[1, 1] && _board[1, 1] == _board[2, 2] && _board[2, 2] == _board[3, 3] && _board[0, 0] != 0)
-            return true;
+        // Check diagonals from top-left to bottom-right
+        for (int startRow = 0; startRow <= _size - _winningCount; startRow++)
+        {
+            for (int startCol = 0; startCol <= _size - _winningCount; startCol++)
+            {
+                int count = 0;
+                int lastPlayer = 0;
+                for (int i = 0; i < _winningCount; i++)
+                {
+                    int player = _board[startRow + i, startCol + i];
+                    if (player == 0 || player != lastPlayer)
+                    {
+                        count = 1;
+                        lastPlayer = player;
+                    }
+                    else
+                    {
+                        count++;
+                    }
 
-        if (_board[0, 3] == _board[1, 2] && _board[1, 2] == _board[2, 1] && _board[2, 1] == _board[3, 0] && _board[0, 3] != 0)
-            return true;
+                    if (count == _winningCount)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // Check diagonals from top-right to bottom-left
+        for (int startRow = 0; startRow <= _size - _winningCount; startRow++)
+        {
+            for (int startCol = _winningCount - 1; startCol < _size; startCol++)
+            {
+                int count = 0;
+                int lastPlayer = 0;
+                for (int i = 0; i < _winningCount; i++)
+                {
+                    int player = _board[startRow + i, startCol - i];
+                    if (player == 0 || player != lastPlayer)
+                    {
+                        count = 1;
+                        lastPlayer = player;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+
+                    if (count == _winningCount)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
 
         return false;
     }
-    private bool IsTie()
+    private bool CheckForTie()
     {
-        for (int i = 0; i < 3; i++)
+        for (int row = 0; row < _size; row++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int col = 0; col < _size; col++)
             {
-                if (_board[i, j] == 0)
+                if (_board[row, col] == 0)
+                {
                     return false;
+                }
             }
         }
 
